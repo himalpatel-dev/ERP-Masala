@@ -21,7 +21,7 @@ const SubCategory = sequelize.define('SubCategory', {
     },
     // categoryId will be added automatically by relationships
 }, {
-    tableName: 'tbl_Master_subcategories',
+    tableName: 'tbl_master_subcategories',
     timestamps: false
 });
 

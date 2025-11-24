@@ -3,12 +3,31 @@ const router = express.Router();
 const authController = require('../controllers/auth.controller');
 const categoryController = require('../controllers/category.controller');
 const subcategoryController = require('../controllers/subcategory.controller');
+const uomController = require('../controllers/uom.controller');
 const verifyToken = require('../middlewares/auth.middleware');
 
 // --- PROTECTED ADMIN ROUTES ---
 
 router.post('/login', authController.Login);
 router.post('/register', authController.register);
+
+
+// --- PROTECTED ADMIN ROUTES (UOM Management) ---
+
+// CREATE UOM
+router.post('/uoms', verifyToken, uomController.createUom);
+
+// READ All UOMs
+router.get('/uoms', verifyToken, uomController.getAllUoms);
+
+// READ UOM By ID
+router.get('/uoms/:id', verifyToken, uomController.getUomById);
+
+// UPDATE UOM
+router.put('/uoms/:id', verifyToken, uomController.updateUom);
+
+// DELETE UOM
+router.delete('/uoms/:id', verifyToken, uomController.deleteUom);
 
 
 // --- PROTECTED ADMIN ROUTES (Category Management) ---
