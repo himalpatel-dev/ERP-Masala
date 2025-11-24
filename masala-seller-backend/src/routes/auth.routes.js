@@ -5,6 +5,8 @@ const categoryController = require('../controllers/category.controller');
 const subcategoryController = require('../controllers/subcategory.controller');
 const uomController = require('../controllers/uom.controller');
 const verifyToken = require('../middlewares/auth.middleware');
+const productController = require('../controllers/product.controller');
+const productVariantController = require('../controllers/productVariant.controller');
 
 // --- PROTECTED ADMIN ROUTES ---
 
@@ -65,5 +67,40 @@ router.put('/subcategories/:id', verifyToken, subcategoryController.updateSubCat
 // DELETE SubCategory
 router.delete('/subcategories/:id', verifyToken, subcategoryController.deleteSubCategory);
 
+
+// --- PROTECTED ADMIN ROUTES (Product Management) ---
+
+// CREATE Product
+router.post('/products', verifyToken, productController.createProduct);
+
+// READ All Products
+router.get('/products', verifyToken, productController.getAllProducts);
+
+// READ Product By ID
+router.get('/products/:id', verifyToken, productController.getProductById);
+
+// UPDATE Product
+router.put('/products/:id', verifyToken, productController.updateProduct);
+
+// DELETE Product
+router.delete('/products/:id', verifyToken, productController.deleteProduct);
+
+
+// --- PROTECTED ADMIN ROUTES (Product Variant Management) ---
+
+// CREATE Product Variant
+router.post('/product-variants', verifyToken, productVariantController.createVariant);
+
+// READ All Product Variants
+router.get('/product-variants', verifyToken, productVariantController.getAllVariants);
+
+// READ Product Variant By ID
+router.get('/product-variants/:id', verifyToken, productVariantController.getVariantById);
+
+// UPDATE Product Variant
+router.put('/product-variants/:id', verifyToken, productVariantController.updateVariant);
+
+// DELETE Product Variant
+router.delete('/product-variants/:id', verifyToken, productVariantController.deleteVariant);
 
 module.exports = router;
