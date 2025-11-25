@@ -4,6 +4,8 @@ const Category = require('./category.model');
 const SubCategory = require('./subcategory.model');
 const Product = require('./product.model');
 const Uom = require('./unitsofmeasure.model');
+const Batch = require('./batch.model');
+const Warehouse = require('./warehouse.model');
 
 // Initialize the DB object
 const db = {};
@@ -15,6 +17,8 @@ db.SubCategory = SubCategory;
 db.Product = Product.Product;
 db.ProductVariant = Product.ProductVariant;
 db.Uom = Uom;
+db.Batch = Batch;
+db.Warehouse = Warehouse;
 
 // =========================================
 // DEFINE RELATIONSHIPS
@@ -38,5 +42,9 @@ db.Product.hasMany(db.ProductVariant, { foreignKey: 'productId', as: 'variants' 
 // 5. Product <-> Uom (One Product has one Uom)
 db.ProductVariant.belongsTo(db.Uom, { foreignKey: 'uomId', as: 'uom' });
 db.Uom.hasMany(db.ProductVariant, { foreignKey: 'uomId', as: 'products' });
+
+// 6. Batch <-> ProductVariant (One Batch has one ProductVariant)
+db.Batch.belongsTo(db.ProductVariant, { foreignKey: 'variant_id', as: 'variant' });
+db.ProductVariant.hasMany(db.Batch, { foreignKey: 'variant_id', as: 'batches' });
 
 module.exports = db;

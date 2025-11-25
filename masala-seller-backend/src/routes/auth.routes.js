@@ -7,6 +7,8 @@ const uomController = require('../controllers/uom.controller');
 const verifyToken = require('../middlewares/auth.middleware');
 const productController = require('../controllers/product.controller');
 const productVariantController = require('../controllers/productVariant.controller');
+const warehouseController = require('../controllers/warehouse.controller');
+const batchController = require('../controllers/batch.controller');
 
 // --- PROTECTED ADMIN ROUTES ---
 
@@ -95,12 +97,46 @@ router.post('/product-variants', verifyToken, productVariantController.createVar
 router.get('/product-variants', verifyToken, productVariantController.getAllVariants);
 
 // READ Product Variant By ID
-router.get('/product-variants/:id', verifyToken, productVariantController.getVariantById);
+router.get('/product-variants/:variant_id', verifyToken, productVariantController.getVariantById);
 
 // UPDATE Product Variant
-router.put('/product-variants/:id', verifyToken, productVariantController.updateVariant);
+router.put('/product-variants/:variant_id', verifyToken, productVariantController.updateVariant);
 
 // DELETE Product Variant
-router.delete('/product-variants/:id', verifyToken, productVariantController.deleteVariant);
+router.delete('/product-variants/:variant_id', verifyToken, productVariantController.deleteVariant);
+
+// --- PROTECTED ADMIN ROUTES (Warehouse Management) ---
+
+// CREATE Warehouse
+router.post('/warehouses', verifyToken, warehouseController.createWarehouse);
+
+// READ All Warehouses
+router.get('/warehouses', verifyToken, warehouseController.getAllWarehouses);
+
+// READ Warehouse By ID
+router.get('/warehouses/:warehouse_id', verifyToken, warehouseController.getWarehouseById);
+
+// UPDATE Warehouse
+router.put('/warehouses/:warehouse_id', verifyToken, warehouseController.updateWarehouse);
+
+// DELETE Warehouse
+router.delete('/warehouses/:warehouse_id', verifyToken, warehouseController.deleteWarehouse);
+
+// --- PROTECTED ADMIN ROUTES (Batch Management) ---
+
+// CREATE Batch
+router.post('/batches', verifyToken, batchController.createBatch);
+
+// READ All Batches
+router.get('/batches', verifyToken, batchController.getAllBatches);
+
+// READ Batch By ID
+router.get('/batches/:batch_id', verifyToken, batchController.getBatchById);
+
+// UPDATE Batch
+router.put('/batches/:batch_id', verifyToken, batchController.updateBatch);
+
+// DELETE Batch
+router.delete('/batches/:batch_id', verifyToken, batchController.deleteBatch);
 
 module.exports = router;
