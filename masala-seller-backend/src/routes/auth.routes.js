@@ -8,7 +8,7 @@ const verifyToken = require('../middlewares/auth.middleware');
 const productController = require('../controllers/product.controller');
 const productVariantController = require('../controllers/productVariant.controller');
 const warehouseController = require('../controllers/warehouse.controller');
-const batchController = require('../controllers/batch.controller');
+const inventoryController = require('../controllers/inventory.controller');
 
 // --- PROTECTED ADMIN ROUTES ---
 
@@ -122,21 +122,22 @@ router.put('/warehouses/:warehouse_id', verifyToken, warehouseController.updateW
 // DELETE Warehouse
 router.delete('/warehouses/:warehouse_id', verifyToken, warehouseController.deleteWarehouse);
 
-// --- PROTECTED ADMIN ROUTES (Batch Management) ---
 
-// CREATE Batch
-router.post('/batches', verifyToken, batchController.createBatch);
+// --- PROTECTED ADMIN ROUTES (Inventory Management) ---
 
-// READ All Batches
-router.get('/batches', verifyToken, batchController.getAllBatches);
+// CREATE Inventory
+router.post('/inventory', verifyToken, inventoryController.createInventory);
 
-// READ Batch By ID
-router.get('/batches/:batch_id', verifyToken, batchController.getBatchById);
+// READ All Inventory
+router.get('/inventory', verifyToken, inventoryController.getAllInventory);
 
-// UPDATE Batch
-router.put('/batches/:batch_id', verifyToken, batchController.updateBatch);
+// READ Inventory By ID
+router.get('/inventory/:inventory_id', verifyToken, inventoryController.getInventoryById);
 
-// DELETE Batch
-router.delete('/batches/:batch_id', verifyToken, batchController.deleteBatch);
+// UPDATE Inventory
+router.put('/inventory/:inventory_id', verifyToken, inventoryController.updateInventory);
+
+// DELETE Inventory
+router.delete('/inventory/:inventory_id', verifyToken, inventoryController.deleteInventory);
 
 module.exports = router;

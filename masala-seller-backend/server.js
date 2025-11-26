@@ -12,7 +12,7 @@ app.use(express.json()); // Allows us to parse JSON bodies
 
 // Simple Route to test
 app.get('/', (req, res) => {
-    res.json({ message: 'Masala Marketplace API is running!' });
+    res.json({ message: 'Masala Marketplace API is running!' }); // Trigger restart
 });
 
 app.use('/api/admin', authRoutes);
@@ -20,7 +20,7 @@ app.use('/api/admin', authRoutes);
 
 // Server Port
 const PORT = process.env.PORT || 3000;
-db.sequelize.sync({ alter: true })
+db.init({ alter: true })
     .then(() => {
         console.log('✅ Database & Tables synced successfully.');
         app.listen(PORT, () => {
@@ -28,5 +28,6 @@ db.sequelize.sync({ alter: true })
         });
     })
     .catch(err => {
-        console.error('❌ Failed to sync database:', err);
+        console.error('❌ Failed to init database:', err);
+        process.exit(1); // optional: stop server if DB init fails
     });

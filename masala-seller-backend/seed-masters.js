@@ -204,6 +204,48 @@ const subCategoryData = [
 ];
 
 // ---------------------------
+// Warehouses
+// ---------------------------
+const warehouses = [
+    {
+        name: 'Mumbai Central Warehouse',
+        code: 'WH-MUM-01',
+        address: 'Plot No. 12, MIDC Industrial Estate, Andheri (E), Mumbai, Maharashtra - 400093',
+        is_active: true
+    },
+    {
+        name: 'Delhi NCR Warehouse',
+        code: 'WH-DEL-01',
+        address: 'Unit No. 5, Sector 45, Near Industrial Park, Gurugram, Haryana - 122018',
+        is_active: true
+    },
+    {
+        name: 'Bengaluru Distribution Hub',
+        code: 'WH-BLR-01',
+        address: 'No. 88, Electronic City, Phase I, Bengaluru, Karnataka - 560100',
+        is_active: true
+    },
+    {
+        name: 'Kolkata East Warehouse',
+        code: 'WH-KOL-01',
+        address: 'Plot A/3, Kolkata Industrial Park, Kolkata, West Bengal - 700107',
+        is_active: true
+    },
+    {
+        name: 'Chennai Regional Warehouse',
+        code: 'WH-CHN-01',
+        address: '12, SIPCOT Industrial Complex, Oragadam, Chennai, Tamil Nadu - 602105',
+        is_active: true
+    },
+    {
+        name: 'Ahmedabad Warehouse',
+        code: 'WH-AHD-01',
+        address: 'GIDC Road, Vatva, Ahmedabad, Gujarat - 382445',
+        is_active: true
+    }
+];
+
+// ---------------------------
 // Seeder functions
 // ---------------------------
 async function seedMasters() {
@@ -249,6 +291,20 @@ async function seedMasters() {
     }
 
     console.log('✅ Subcategories seeded.');
+
+    for (const item of warehouses) {
+        await db.Warehouse.findOrCreate({
+            where: { code: item.code },
+            defaults: {
+                name: item.name,
+                code: item.code,
+                address: item.address,
+                is_active: item.is_active
+            }
+        });
+    }
+
+    console.log("🎉 Warehouses seeding completed successfully.");
 }
 
 // ---------------------------
@@ -261,6 +317,7 @@ async function clearTables() {
     await db.SubCategory.destroy({ where: {}, truncate: true, cascade: true, restartIdentity: true });
     await db.Category.destroy({ where: {}, truncate: true, cascade: true, restartIdentity: true });
     await db.Uom.destroy({ where: {}, truncate: true, cascade: true, restartIdentity: true });
+    await db.Warehouse.destroy({ where: {}, truncate: true, cascade: true, restartIdentity: true });
     console.log('🧹 Tables truncated.');
 }
 
