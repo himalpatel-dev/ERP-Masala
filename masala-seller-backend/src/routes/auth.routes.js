@@ -14,6 +14,7 @@ const inventoryController = require('../controllers/inventory.controller');
 
 router.post('/login', authController.Login);
 router.post('/register', authController.register);
+router.get('/users', verifyToken, authController.getAllUser);
 
 
 // --- PROTECTED ADMIN ROUTES (UOM Management) ---

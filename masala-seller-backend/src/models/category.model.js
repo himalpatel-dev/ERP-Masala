@@ -12,6 +12,10 @@ const Category = sequelize.define('Category', {
         allowNull: false,
         unique: true
     },
+    description: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
     image: {
         type: DataTypes.STRING, // URL of the category icon/image
         allowNull: true

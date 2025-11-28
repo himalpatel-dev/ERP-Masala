@@ -2,15 +2,16 @@
 
 const db = require('../models');
 const SubCategory = db.SubCategory;
+const Category = db.Category;
 
 const createSubCategory = async (data) => {
     try {
-        let { name, categoryId, image } = data;
+        let { name, categoryId, image, description } = data;
         if (!image) {
             image = `https://placehold.co/200x200?text=${name}`;
         }
 
-        const sub = await SubCategory.create({ name, categoryId, image, isActive: true });
+        const sub = await SubCategory.create({ name, categoryId, image, description, isActive: true });
         return sub;
     } catch (error) {
         throw error;
@@ -19,7 +20,13 @@ const createSubCategory = async (data) => {
 
 const getAllSubCategories = async () => {
     try {
-        const data = await SubCategory.findAll({ include: ['category'] });
+        const data = await SubCategory.findAll({
+            include: [{
+                model: Category,
+                as: 'category',
+                attributes: ['name']   // only category name
+            }]
+        });
         return data;
     } catch (error) {
         throw error;
@@ -49,8 +56,8 @@ const updateSubCategory = async (id, updateData) => {
             throw err;
         }
 
-        const { name, categoryId, isActive, image } = updateData;
-        await sub.update({ name, categoryId, isActive, image });
+        const { name, categoryId, isActive, image, description } = updateData;
+        await sub.update({ name, categoryId, isActive, image, description });
 
         // reload with association included
         const updated = await SubCategory.findByPk(id, { include: ['category'] });

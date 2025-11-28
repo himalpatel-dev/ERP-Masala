@@ -73,8 +73,18 @@ const Login = async (loginData) => {
     }
 };
 
+//get all user
+const getAllUser = async () => {
+    try {
+        const users = await User.findAll();
+        return users;
+    } catch (error) {
+        throw error;
+    }
+}
 
 module.exports = {
     registerUser,
-    Login
+    Login,
+    getAllUser
 };

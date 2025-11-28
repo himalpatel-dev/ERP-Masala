@@ -1,0 +1,41 @@
+<div class="modal-overlay" (click)="onClose()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="card">
+            <div class="card-header">
+                <h2>{{ isEditMode ? 'Edit Category' : 'Add New Category' }}</h2>
+                <button class="btn-close" (click)="onClose()">×</button>
+            </div>
+            <div class="card-body">
+                <form (ngSubmit)="onSubmit()" #categoryForm="ngForm">
+                    <div class="form-group">
+                        <label for="name">Category Name</label>
+                        <input type="text" id="name" name="name" [(ngModel)]="categoryData.name" required
+                            placeholder="e.g. Premium Whole Spices" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" [(ngModel)]="categoryData.description" required
+                            placeholder="Enter category description..." class="form-control" rows="4"></textarea>
+                    </div>
+
+                    <div class="message error" *ngIf="errorMessage">
+                        {{ errorMessage }}
+                    </div>
+
+                    <div class="message success" *ngIf="successMessage">
+                        {{ successMessage }}
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" (click)="onClose()">Cancel</button>
+                        <button type="submit" class="btn-primary" [disabled]="isLoading">
+                            <span *ngIf="!isLoading">{{ isEditMode ? 'Update' : 'Add' }}</span>
+                            <span *ngIf="isLoading">{{ isEditMode ? 'Updating...' : 'Adding...' }}</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -15,6 +15,10 @@ const SubCategory = sequelize.define('SubCategory', {
         type: DataTypes.STRING, // URL of the category icon/image
         allowNull: true
     },
+    description: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
     isActive: {
         type: DataTypes.BOOLEAN,
         defaultValue: true

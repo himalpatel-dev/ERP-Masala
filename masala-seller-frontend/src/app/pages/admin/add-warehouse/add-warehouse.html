@@ -1,0 +1,60 @@
+<div class="modal-overlay" (click)="onCancel()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+            <h2>{{ warehouseId ? 'Edit Warehouse' : 'Add New Warehouse' }}</h2>
+            <button class="close-btn" (click)="onCancel()">×</button>
+        </div>
+
+        <div class="modal-body">
+            <form [formGroup]="warehouseForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label for="name">Warehouse Name</label>
+                    <input type="text" id="name" formControlName="name" placeholder="Enter warehouse name">
+                    <div class="error-message"
+                        *ngIf="warehouseForm.get('name')?.touched && warehouseForm.get('name')?.invalid">
+                        Name is required.
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="code">Warehouse Code</label>
+                    <input type="text" id="code" formControlName="code"
+                        placeholder="Enter warehouse code (e.g., WH-001)">
+                    <div class="error-message"
+                        *ngIf="warehouseForm.get('code')?.touched && warehouseForm.get('code')?.invalid">
+                        Code is required.
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea id="address" formControlName="address" rows="3"
+                        placeholder="Enter full address"></textarea>
+                    <div class="error-message"
+                        *ngIf="warehouseForm.get('address')?.touched && warehouseForm.get('address')?.invalid">
+                        Address is required.
+                    </div>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <label class="checkbox-container">
+                        <input type="checkbox" formControlName="is_active">
+                        <span class="checkmark"></span>
+                        Active
+                    </label>
+                </div>
+
+                <div class="error-alert" *ngIf="errorMessage">
+                    {{ errorMessage }}
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" (click)="onCancel()">Cancel</button>
+                    <button type="submit" class="btn-primary" [disabled]="warehouseForm.invalid || isLoading">
+                        {{ isLoading ? 'Saving...' : (warehouseId ? 'Update' : 'Add') }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

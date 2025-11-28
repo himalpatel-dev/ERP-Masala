@@ -1,0 +1,52 @@
+<div class="modal-overlay" (click)="onCancel()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+            <h2>{{ subCategoryId ? 'Edit Sub Category' : 'Add New Sub Category' }}</h2>
+            <button class="close-btn" (click)="onCancel()">×</button>
+        </div>
+
+        <div class="modal-body">
+            <form [formGroup]="subCategoryForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label for="categoryId">Parent Category</label>
+                    <select id="categoryId" formControlName="categoryId">
+                        <option value="" disabled>Select Category</option>
+                        <option *ngFor="let cat of categories" [value]="cat.id">
+                            {{ cat.name }}
+                        </option>
+                    </select>
+                    <div class="error-message"
+                        *ngIf="subCategoryForm.get('categoryId')?.touched && subCategoryForm.get('categoryId')?.invalid">
+                        Category is required.
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Sub Category Name</label>
+                    <input type="text" id="name" formControlName="name" placeholder="Enter sub category name">
+                    <div class="error-message"
+                        *ngIf="subCategoryForm.get('name')?.touched && subCategoryForm.get('name')?.invalid">
+                        Name is required.
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" formControlName="description" rows="3"
+                        placeholder="Enter description"></textarea>
+                </div>
+
+                <div class="error-alert" *ngIf="errorMessage">
+                    {{ errorMessage }}
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" (click)="onCancel()">Cancel</button>
+                    <button type="submit" class="btn-primary" [disabled]="subCategoryForm.invalid || isLoading">
+                        {{ isLoading ? 'Saving...' : (subCategoryId ? 'Update' : 'Add') }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

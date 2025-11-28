@@ -1,0 +1,35 @@
+<div class="login-container">
+    <div class="login-card">
+        <div class="brand-area">
+            <h1>Masala Admin</h1>
+            <p>Welcome back! Please login to continue.</p>
+        </div>
+
+        <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" [(ngModel)]="credentials.email" required
+                    placeholder="admin@masala.com" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" [(ngModel)]="credentials.password" required
+                    placeholder="••••••••" class="form-control">
+            </div>
+
+            <div class="error-message" *ngIf="errorMessage">
+                {{ errorMessage }}
+            </div>
+
+            <button type="submit" class="btn-login" [disabled]="isLoading">
+                <span *ngIf="!isLoading">Sign In</span>
+                <span *ngIf="isLoading">Signing in...</span>
+            </button>
+        </form>
+        <br />
+        <div class="register-area">
+            <p>Don't have an account? <a routerLink="/register">Register</a></p>
+        </div>
+    </div>
+</div>

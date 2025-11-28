@@ -26,21 +26,78 @@ const uoms = [
 // Category data (Masala)
 // ---------------------------
 const categories = [
-    { name: "Basic Spice Powders", image: "https://placehold.co/200x200/E67E22/white?text=Basic+Powders" },
-    { name: "Blended Masala", image: "https://placehold.co/200x200/C0392B/white?text=Blended+Masala" },
-    { name: "Punjabi & North Indian", image: "https://placehold.co/200x200/3357FF/white?text=North+Indian" },
-    { name: "South Indian Masala", image: "https://placehold.co/200x200/2ECC71/white?text=South+Indian" },
-    { name: "Gujarati & Kathiyawadi", image: "https://placehold.co/200x200/8E44AD/white?text=Gujarati+Masala" },
-    { name: "Snacks & Chaat Masala", image: "https://placehold.co/200x200/F39C12/white?text=Snacks+%26+Chaat" },
-    { name: "Rice & Biryani Masala", image: "https://placehold.co/200x200/34495E/white?text=Rice+%26+Biryani" },
-    { name: "Sabji & Curry Masala", image: "https://placehold.co/200x200/1ABC9C/white?text=Sabji+%26+Curry" },
-    { name: "Dal & Lentil Masala", image: "https://placehold.co/200x200/9B59B6/white?text=Dal+Masala" },
-    { name: "Non-Veg Masala", image: "https://placehold.co/200x200/D35400/white?text=Non-Veg+Masala" },
-    { name: "Pickle & Achar Masala", image: "https://placehold.co/200x200/FF8F00/white?text=Achar+Masala" },
-    { name: "Tea & Milk Masala", image: "https://placehold.co/200x200/E91E63/white?text=Tea+%26+Milk" },
-    { name: "Ready Mix & Instant", image: "https://placehold.co/200x200/28B463/white?text=Ready+Mix" },
-    { name: "Others", image: "https://placehold.co/200x200/7F8C8D/white?text=Others" }
+    {
+        name: "Basic Spice Powders",
+        image: "https://placehold.co/200x200/E67E22/white?text=Basic+Powders",
+        description: "Single-ingredient essential spices used in everyday cooking."
+    },
+    {
+        name: "Blended Masala",
+        image: "https://placehold.co/200x200/C0392B/white?text=Blended+Masala",
+        description: "Expertly mixed spice blends crafted for rich flavor and aroma."
+    },
+    {
+        name: "Punjabi & North Indian",
+        image: "https://placehold.co/200x200/3357FF/white?text=North+Indian",
+        description: "Traditional North Indian masalas used for Punjabi-style dishes."
+    },
+    {
+        name: "South Indian Masala",
+        image: "https://placehold.co/200x200/2ECC71/white?text=South+Indian",
+        description: "Authentic South Indian spice mixes for dosa, sambar, and curries."
+    },
+    {
+        name: "Gujarati & Kathiyawadi",
+        image: "https://placehold.co/200x200/8E44AD/white?text=Gujarati+Masala",
+        description: "Special masalas inspired by Gujarati and Kathiyawadi cuisine."
+    },
+    {
+        name: "Snacks & Chaat Masala",
+        image: "https://placehold.co/200x200/F39C12/white?text=Snacks+%26+Chaat",
+        description: "Tangy and spicy blends perfect for snacks, chaats, and salads."
+    },
+    {
+        name: "Rice & Biryani Masala",
+        image: "https://placehold.co/200x200/34495E/white?text=Rice+%26+Biryani",
+        description: "Fragrant spice mixes crafted for biryani, pulao, and rice dishes."
+    },
+    {
+        name: "Sabji & Curry Masala",
+        image: "https://placehold.co/200x200/1ABC9C/white?text=Sabji+%26+Curry",
+        description: "Everyday masala blends enhancing the taste of vegetables and curries."
+    },
+    {
+        name: "Dal & Lentil Masala",
+        image: "https://placehold.co/200x200/9B59B6/white?text=Dal+Masala",
+        description: "Flavorful spice mixes for dal, lentils, and pulse-based dishes."
+    },
+    {
+        name: "Non-Veg Masala",
+        image: "https://placehold.co/200x200/D35400/white?text=Non-Veg+Masala",
+        description: "Spice blends crafted for chicken, mutton, fish, and seafood dishes."
+    },
+    {
+        name: "Pickle & Achar Masala",
+        image: "https://placehold.co/200x200/FF8F00/white?text=Achar+Masala",
+        description: "Traditional masalas for making homemade pickles and achars."
+    },
+    {
+        name: "Tea & Milk Masala",
+        image: "https://placehold.co/200x200/E91E63/white?text=Tea+%26+Milk",
+        description: "Masalas that add aroma and flavor to tea, milk, and beverages."
+    },
+    {
+        name: "Ready Mix & Instant",
+        image: "https://placehold.co/200x200/28B463/white?text=Ready+Mix",
+        description: "Instant mixes for quick preparation of meals and snacks."
+    },
+    {
+        name: "Others",
+        image: "https://placehold.co/200x200/7F8C8D/white?text=Others",
+        description: "Additional spice products and mixes that do not fit major categories."
+    }
 ];
+
 
 // ---------------------------
 // Subcategory data (Masala)
@@ -49,159 +106,160 @@ const subCategoryData = [
     {
         categoryName: "Basic Spice Powders",
         subs: [
-            "Turmeric Powder (Haldi)",
-            "Red Chilli Powder (Lal Mirch)",
-            "Coriander Powder (Dhaniya)",
-            "Cumin Powder (Jeera)",
-            "Black Pepper Powder",
-            "Dry Ginger Powder (Sonth)",
-            "Amchur Powder (Dry Mango)",
-            "Kasuri Methi"
+            { name: "Turmeric Powder (Haldi)", description: "Pure turmeric powder for color, aroma, and medicinal benefits." },
+            { name: "Red Chilli Powder (Lal Mirch)", description: "Finely ground chilli powder for heat and vibrant red color." },
+            { name: "Coriander Powder (Dhaniya)", description: "Aromatic coriander powder used in everyday cooking." },
+            { name: "Cumin Powder (Jeera)", description: "Roasted and ground cumin for earthy, warm flavors." },
+            { name: "Black Pepper Powder", description: "Strong, spicy black pepper for seasoning and cooking." },
+            { name: "Dry Ginger Powder (Sonth)", description: "Powdered dry ginger used for spice blends and tea." },
+            { name: "Amchur Powder (Dry Mango)", description: "Tangy dry mango powder for chutneys and curries." },
+            { name: "Kasuri Methi", description: "Dried fenugreek leaves for aroma and flavor enhancement." }
         ]
     },
     {
         categoryName: "Blended Masala",
         subs: [
-            "Garam Masala",
-            "Kitchen King Masala",
-            "Sabji Masala",
-            "Curry Masala",
-            "All Purpose Masala",
-            "Tandoori Masala",
-            "BBQ Masala"
+            { name: "Garam Masala", description: "Traditional Indian spice mix for rich and warm flavors." },
+            { name: "Kitchen King Masala", description: "All-purpose blend for enhancing veg and curry dishes." },
+            { name: "Sabji Masala", description: "Daily-use masala for all types of vegetable dishes." },
+            { name: "Curry Masala", description: "Flavorful mix for thick and aromatic curries." },
+            { name: "All Purpose Masala", description: "Versatile seasoning for snacks and cooked dishes." },
+            { name: "Tandoori Masala", description: "Smoky and tangy blend perfect for tandoori items." },
+            { name: "BBQ Masala", description: "Blend for grilling and barbeque-style dishes." }
         ]
     },
     {
         categoryName: "Punjabi & North Indian",
         subs: [
-            "Rajma Masala",
-            "Chole Masala",
-            "Paneer Butter Masala",
-            "Shahi Paneer Masala",
-            "Dal Makhani Masala",
-            "Punjabi Sabji Masala"
+            { name: "Rajma Masala", description: "Rich-flavored masala for Punjabi-style kidney bean curry." },
+            { name: "Chole Masala", description: "Perfect spice mix for authentic Chole/Chana Masala." },
+            { name: "Paneer Butter Masala", description: "Creamy blend for restaurant-style paneer dishes." },
+            { name: "Shahi Paneer Masala", description: "Royal spice blend for creamy Shahi Paneer." },
+            { name: "Dal Makhani Masala", description: "Masala crafted for Delhi-style Dal Makhani." },
+            { name: "Punjabi Sabji Masala", description: "Specialized for rich Punjabi vegetable dishes." }
         ]
     },
     {
         categoryName: "South Indian Masala",
         subs: [
-            "Sambar Masala",
-            "Rasam Masala",
-            "Idli Podi / Gunpowder",
-            "Upma Masala",
-            "South Indian Curry Masala"
+            { name: "Sambar Masala", description: "Authentic spice mix for South Indian sambar." },
+            { name: "Rasam Masala", description: "Tangy spice blend for traditional rasam." },
+            { name: "Idli Podi / Gunpowder", description: "South Indian dry chutney powder for idli/dosa." },
+            { name: "Upma Masala", description: "Flavourful blend for South Indian upma." },
+            { name: "South Indian Curry Masala", description: "Masala for coconut-based South Indian curries." }
         ]
     },
     {
         categoryName: "Gujarati & Kathiyawadi",
         subs: [
-            "Undhiyu Masala",
-            "Dhokla Masala",
-            "Fafda Masala",
-            "Sev Khamani Masala",
-            "Kathiyawadi Sabji Masala",
-            "Bhajiya Masala"
+            { name: "Undhiyu Masala", description: "Special blend for traditional Gujarati Undhiyu." },
+            { name: "Dhokla Masala", description: "Perfect seasoning for soft and spongy dhokla." },
+            { name: "Fafda Masala", description: "Tangy-spicy mix for fafda and farsan items." },
+            { name: "Sev Khamani Masala", description: "Masala for Gujarati sev khamani delicacy." },
+            { name: "Kathiyawadi Sabji Masala", description: "Spicy and rustic masala for Kathiyawadi dishes." },
+            { name: "Bhajiya Masala", description: "Crispy fritter seasoning for bhajiya and pakora." }
         ]
     },
     {
         categoryName: "Snacks & Chaat Masala",
         subs: [
-            "Chaat Masala",
-            "Pani Puri Masala",
-            "Bhel Puri Masala",
-            "Sandwich Masala",
-            "French Fries Masala",
-            "Popcorn Masala",
-            "Sprinkle Masala"
+            { name: "Chaat Masala", description: "Tangy masala for chaat, salads, and snacks." },
+            { name: "Pani Puri Masala", description: "Ready mix for perfect pani puri water." },
+            { name: "Bhel Puri Masala", description: "Flavourful spice for bhel and street snacks." },
+            { name: "Sandwich Masala", description: "Seasoning for sandwiches and toasties." },
+            { name: "French Fries Masala", description: "Sprinkle mix for fries and munchies." },
+            { name: "Popcorn Masala", description: "Seasoning for buttery or spicy popcorn." },
+            { name: "Sprinkle Masala", description: "Universal sprinkle for snacks and fast foods." }
         ]
     },
     {
         categoryName: "Rice & Biryani Masala",
         subs: [
-            "Biryani Masala",
-            "Pulao Masala",
-            "Fried Rice Masala",
-            "Jeera Rice Masala",
-            "Lemon Rice Masala",
-            "Curd Rice Masala"
+            { name: "Biryani Masala", description: "Premium blend for aromatic biryanis." },
+            { name: "Pulao Masala", description: "Mild yet aromatic masala for pulao." },
+            { name: "Fried Rice Masala", description: "Desi-Chinese seasoning for fried rice." },
+            { name: "Jeera Rice Masala", description: "Simple yet aromatic masala for jeera rice." },
+            { name: "Lemon Rice Masala", description: "South Indian blend for tangy lemon rice." },
+            { name: "Curd Rice Masala", description: "Subtle masala for flavored curd rice." }
         ]
     },
     {
         categoryName: "Sabji & Curry Masala",
         subs: [
-            "Mixed Veg Masala",
-            "Aloo Sabji Masala",
-            "Bhindi Masala",
-            "Baingan Masala",
-            "Paneer Masala",
-            "Gravy Thickener Masala"
+            { name: "Mixed Veg Masala", description: "Blend for mixed vegetable preparations." },
+            { name: "Aloo Sabji Masala", description: "Daily-use masala for potato dishes." },
+            { name: "Bhindi Masala", description: "Special masala for okra dishes." },
+            { name: "Baingan Masala", description: "Spice mix for brinjal-based dishes." },
+            { name: "Paneer Masala", description: "Blend for paneer curries and gravy dishes." },
+            { name: "Gravy Thickener Masala", description: "Special mix to thicken gravies naturally." }
         ]
     },
     {
         categoryName: "Dal & Lentil Masala",
         subs: [
-            "Dal Tadka Masala",
-            "Dal Fry Masala",
-            "Gujarati Dal Masala",
-            "Sambar Dal Masala",
-            "Khichdi Masala"
+            { name: "Dal Tadka Masala", description: "Masala for aromatic and spicy dal tadka." },
+            { name: "Dal Fry Masala", description: "Special blend for classic dal fry." },
+            { name: "Gujarati Dal Masala", description: "Sweet-spicy mix for Gujarati dal." },
+            { name: "Sambar Dal Masala", description: "Masala suited for lentil-based sambar." },
+            { name: "Khichdi Masala", description: "Flavor mix for Gujarati and North Indian khichdi." }
         ]
     },
     {
         categoryName: "Non-Veg Masala",
         subs: [
-            "Chicken Masala",
-            "Mutton Masala",
-            "Egg Curry Masala",
-            "Fish Curry Masala",
-            "Biryani Non-Veg Masala",
-            "Tandoori Chicken Masala"
+            { name: "Chicken Masala", description: "Masala for chicken curries and dry dishes." },
+            { name: "Mutton Masala", description: "Rich blend for mutton preparations." },
+            { name: "Egg Curry Masala", description: "Perfect blend for egg curry and bhurji." },
+            { name: "Fish Curry Masala", description: "Tangy-spicy mix for seafood curries." },
+            { name: "Biryani Non-Veg Masala", description: "Masala for chicken/mutton biryani." },
+            { name: "Tandoori Chicken Masala", description: "Smoky blend for tandoori-style chicken." }
         ]
     },
     {
         categoryName: "Pickle & Achar Masala",
         subs: [
-            "Mango Pickle Masala",
-            "Mixed Pickle Masala",
-            "Lemon Pickle Masala",
-            "Chilli Pickle Masala",
-            "Gujarati Achar Masala",
-            "Punjabi Achar Masala"
+            { name: "Mango Pickle Masala", description: "Classic masala for raw mango pickles." },
+            { name: "Mixed Pickle Masala", description: "Masala for assorted vegetable pickles." },
+            { name: "Lemon Pickle Masala", description: "Tangy-spicy mix for lemon achar." },
+            { name: "Chilli Pickle Masala", description: "Spicy blend for green/red chilli pickles." },
+            { name: "Gujarati Achar Masala", description: "Authentic Gujarati-style pickle mix." },
+            { name: "Punjabi Achar Masala", description: "Bold and spicy Punjabi pickle blend." }
         ]
     },
     {
         categoryName: "Tea & Milk Masala",
         subs: [
-            "Tea Masala",
-            "Milk Masala",
-            "Badam Milk Masala",
-            "Kesar Pista Masala",
-            "Turmeric Latte Mix"
+            { name: "Tea Masala", description: "Aromatic blend for masala chai." },
+            { name: "Milk Masala", description: "Nutty-spiced mix for flavored milk." },
+            { name: "Badam Milk Masala", description: "Almond-rich mix for sweet, creamy milk." },
+            { name: "Kesar Pista Masala", description: "Saffron-pistachio blend for desserts and milk." },
+            { name: "Turmeric Latte Mix", description: "Healthy golden milk blend with spices." }
         ]
     },
     {
         categoryName: "Ready Mix & Instant",
         subs: [
-            "Pav Bhaji Masala Mix",
-            "Manchurian Mix",
-            "Idli/Dosa Ready Mix",
-            "Handvo Mix",
-            "Bhajiya Mix",
-            "Dahi Wada Mix"
+            { name: "Pav Bhaji Masala Mix", description: "Instant mix for Mumbai-style pav bhaji." },
+            { name: "Manchurian Mix", description: "Ready mix for veg/non-veg manchurian." },
+            { name: "Idli/Dosa Ready Mix", description: "Quick batter mix for idli or dosa." },
+            { name: "Handvo Mix", description: "Gujarati-style instant handvo mix." },
+            { name: "Bhajiya Mix", description: "Instant pakora/bhajiya batter mix." },
+            { name: "Dahi Wada Mix", description: "Soft and fluffy dahi wada instant mix." }
         ]
     },
     {
         categoryName: "Others",
         subs: [
-            "Salad Seasoning",
-            "Italian Herbs Mix",
-            "Pizza Masala",
-            "Pasta Masala",
-            "Chinese Masala",
-            "Special House Blend"
+            { name: "Salad Seasoning", description: "Healthy seasoning for salads and bowls." },
+            { name: "Italian Herbs Mix", description: "Blend of oregano, basil, thyme, and herbs." },
+            { name: "Pizza Masala", description: "Masala for Indian-style pizza flavor." },
+            { name: "Pasta Masala", description: "Seasoning for creamy or spicy pasta." },
+            { name: "Chinese Masala", description: "Desi-Chinese flavor enhancer." },
+            { name: "Special House Blend", description: "Signature blend unique to your brand." }
         ]
     }
 ];
+
 
 // ---------------------------
 // Warehouses
@@ -263,12 +321,11 @@ async function seedMasters() {
 
     for (const cat of categories) {
         await db.Category.findOrCreate({
-            where: { name: cat.name },
+            where: { name: cat.name, description: cat.description },
             defaults: { image: cat.image }
         });
     }
     console.log('✅ Categories seeded.');
-
     for (const item of subCategoryData) {
         const category = await db.Category.findOne({ where: { name: item.categoryName } });
         if (!category) {
@@ -278,17 +335,28 @@ async function seedMasters() {
 
         const categorycolor = category.image.match(/200x200\/([^/]+)\//)?.[1] || 'CCCCCC';
 
-        for (const subName of item.subs) {
-            await db.SubCategory.findOrCreate({
-                where: { name: subName, categoryId: category.id },
-                defaults: {
-                    isActive: true,
-                    image: `https://placehold.co/200x200/${categorycolor}/white?text=${encodeURIComponent(subName)}`
-                }
-            });
+        for (const sub of item.subs) {
+            // support both string subs and object subs ({ name, description })
+            const name = typeof sub === 'string' ? sub : sub.name;
+            const description = typeof sub === 'string' ? '' : (sub.description || '');
+
+            try {
+                await db.SubCategory.findOrCreate({
+                    where: { name, categoryId: category.id }, // don't include description in where
+                    defaults: {
+                        isActive: true,
+                        description,
+                        image: `https://placehold.co/200x200/${categorycolor}/white?text=${encodeURIComponent(name)}`
+                    }
+                });
+            } catch (err) {
+                console.error(` ✖️ Failed to add sub '${name}' for category '${item.categoryName}':`, err.message);
+            }
         }
+
         console.log(` > Added subs for ${item.categoryName}`);
     }
+
 
     console.log('✅ Subcategories seeded.');
 

@@ -1,0 +1,58 @@
+<div class="register-container">
+    <div class="register-card">
+        <div class="brand-area">
+            <h1>Create Account</h1>
+            <p>Join Masala Admin Panel</p>
+        </div>
+
+        <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" [(ngModel)]="userData.name" required placeholder="John Doe"
+                    class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" [(ngModel)]="userData.email" required
+                    placeholder="admin@masala.com" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="mobile">Mobile Number</label>
+                <input type="tel" id="mobile" name="mobile" [(ngModel)]="userData.mobile" required
+                    placeholder="9876543210" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="role">Role</label>
+                <select id="role" name="role" [(ngModel)]="userData.role" required class="form-control">
+                    <option *ngFor="let role of roles" [value]="role.value">{{ role.label }}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" [(ngModel)]="userData.password" required
+                    placeholder="••••••••" class="form-control">
+            </div>
+
+            <div class="message error" *ngIf="errorMessage">
+                {{ errorMessage }}
+            </div>
+
+            <div class="message success" *ngIf="successMessage">
+                {{ successMessage }}
+            </div>
+
+            <button type="submit" class="btn-register" [disabled]="isLoading">
+                <span *ngIf="!isLoading">Create Account</span>
+                <span *ngIf="isLoading">Creating...</span>
+            </button>
+
+            <div class="login-link">
+                Already have an account? <a routerLink="/login">Sign In</a>
+            </div>
+        </form>
+    </div>
+</div>
