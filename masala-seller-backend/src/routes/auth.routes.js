@@ -97,6 +97,9 @@ router.post('/product-variants', verifyToken, productVariantController.createVar
 // READ All Product Variants
 router.get('/product-variants', verifyToken, productVariantController.getAllVariants);
 
+// READ All Product Variants Productwise (MUST BE BEFORE :variant_id)
+router.get('/product-variants/productwise', verifyToken, productVariantController.getAllVariantsProductwise);
+
 // READ Product Variant By ID
 router.get('/product-variants/:variant_id', verifyToken, productVariantController.getVariantById);
 
@@ -105,6 +108,7 @@ router.put('/product-variants/:variant_id', verifyToken, productVariantControlle
 
 // DELETE Product Variant
 router.delete('/product-variants/:variant_id', verifyToken, productVariantController.deleteVariant);
+
 
 // --- PROTECTED ADMIN ROUTES (Warehouse Management) ---
 

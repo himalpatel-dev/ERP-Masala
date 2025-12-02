@@ -39,7 +39,7 @@ const ProductVariant = sequelize.define('ProductVariant', {
     unique: true
   },
   pack_weight: {
-    type: DataTypes.DECIMAL(12, 3),
+    type: DataTypes.DECIMAL(12, 2),
     allowNull: true
   },
   barcode: {

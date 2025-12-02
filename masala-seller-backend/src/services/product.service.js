@@ -37,7 +37,20 @@ const getAllProducts = async () => {
 
 const getProductById = async (id) => {
     try {
-        const product = await Product.findByPk(id);
+        const product = await Product.findByPk(id, {
+            include: [
+                {
+                    model: db.ProductVariant,
+                    as: 'variants',
+                    include: [
+                        {
+                            model: db.Uom,
+                            as: 'uom'
+                        }
+                    ]
+                }
+            ]
+        });
         if (!product) {
             const err = new Error('Product not found.');
             err.status = 404;

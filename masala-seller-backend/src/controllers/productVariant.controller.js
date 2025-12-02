@@ -72,9 +72,22 @@ const deleteVariant = async (req, res) => {
     }
 };
 
+const getAllVariantsProductwise = async (req, res) => {
+    try {
+        const variants = await variantService.getAllVariantsProductwise();
+        res.status(200).json(variants);
+    } catch (error) {
+        console.error('Fetch variants error:', error);
+        const status = error.status || 500;
+        const message = (status === 500) ? 'Server error fetching variants.' : error.message;
+        res.status(status).json({ message });
+    }
+};
+
 module.exports = {
     createVariant,
     getAllVariants,
+    getAllVariantsProductwise,
     getVariantById,
     updateVariant,
     deleteVariant

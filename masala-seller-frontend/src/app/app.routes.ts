@@ -5,6 +5,7 @@ import { RegisterComponent } from './pages/register/register';
 import { CategoryListComponent } from './pages/admin/category-list/category-list';
 import { SubCategoryListComponent } from './pages/admin/sub-category-list/sub-category-list';
 import { WarehouseListComponent } from './pages/admin/warehouse-list/warehouse-list';
+import { UomListComponent } from './pages/admin/uom-list/uom-list';
 
 export const routes: Routes = [
     {
@@ -30,6 +31,14 @@ export const routes: Routes = [
             {
                 path: 'warehouses',
                 component: WarehouseListComponent
+            },
+            {
+                path: 'uom',
+                component: UomListComponent
+            },
+            {
+                path: 'product-variants',
+                loadComponent: () => import('./pages/admin/product-variant-list/product-variant-list').then(m => m.ProductVariantListComponent)
             }
         ]
     },

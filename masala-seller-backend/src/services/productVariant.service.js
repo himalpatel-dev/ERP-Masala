@@ -1,6 +1,9 @@
 // services/productVariant.service.js
 const db = require('../models');
 const ProductVariant = db.ProductVariant;
+const Product = db.Product;
+const Category = db.Category;
+const SubCategory = db.SubCategory;
 
 const createVariant = async (variantData) => {
     try {
@@ -109,9 +112,53 @@ const deleteVariant = async (variant_id) => {
     }
 };
 
+//mkae this like get data from product also that prodcut name from productid
+
+const getAllVariantsProductwise = async () => {
+    try {
+        const variants = await ProductVariant.findAll({
+            attributes: [
+                'variant_id',
+                'variant_code',
+                'barcode',
+                'net_content',
+                'productId',
+                [db.sequelize.col('product.category.name'), 'category'],
+                [db.sequelize.col('product.subcategory.name'), 'subcategory'],
+                [db.sequelize.col('product.name'), 'productname'],
+                [db.sequelize.col('product.description'), 'description'],
+                [db.sequelize.literal(`"ProductVariant"."pack_weight" || ' ' || "uom"."name"`), 'pack_with_unit']
+            ],
+            include: [
+                {
+                    model: Product,
+                    as: 'product',
+                    attributes: [],
+                    include: [
+                        { model: Category, as: 'category', attributes: [] },
+                        { model: SubCategory, as: 'subcategory', attributes: [] }
+                    ]
+                },
+                {
+                    model: db.Uom,
+                    as: 'uom',
+                    attributes: []
+                }
+            ],
+            raw: true
+        });
+
+        return variants;
+    } catch (error) {
+        // optionally log error here
+        throw error;
+    }
+};
+
 module.exports = {
     createVariant,
     getAllVariants,
+    getAllVariantsProductwise,
     getVariantById,
     updateVariant,
     deleteVariant
