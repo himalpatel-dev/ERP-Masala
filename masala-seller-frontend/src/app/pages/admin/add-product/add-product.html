@@ -85,7 +85,11 @@
                                     <input matInput formControlName="barcode">
                                 </mat-form-field>
                                 <button mat-raised-button color="primary" type="submit"
-                                    [disabled]="variantForm.invalid">Add Variant</button>
+                                    [disabled]="variantForm.invalid">
+                                    {{ editingVariantIndex !== null ? 'Update Variant' : 'Add Variant' }}
+                                </button>
+                                <button mat-button type="button" (click)="cancelEdit()"
+                                    *ngIf="editingVariantIndex !== null">Cancel</button>
                             </div>
                         </form>
 
@@ -106,6 +110,9 @@
                                 <ng-container matColumnDef="actions">
                                     <th mat-header-cell *matHeaderCellDef> Actions </th>
                                     <td mat-cell *matCellDef="let element; let i = index">
+                                        <button mat-icon-button color="primary" (click)="editVariant(i)">
+                                            <mat-icon>edit</mat-icon>
+                                        </button>
                                         <button mat-icon-button color="warn" (click)="removeVariant(i)">
                                             <mat-icon>delete</mat-icon>
                                         </button>
@@ -128,9 +135,67 @@
                         <ng-template matStepLabel>Review</ng-template>
                         <div class="review-section">
                             <h3>Product Summary</h3>
-                            <p><strong>Name:</strong> {{productForm.get('name')?.value}}</p>
-                            <p><strong>Code:</strong> {{productForm.get('productCode')?.value}}</p>
-                            <p><strong>Variants:</strong> {{variants.length}}</p>
+
+                            <!-- Read-only Product Details -->
+                            <div class="form-row">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Product Name</mat-label>
+                                    <input matInput [value]="productForm.get('name')?.value" disabled>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Product Code</mat-label>
+                                    <input matInput [value]="productForm.get('productCode')?.value" disabled>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="form-row">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Category</mat-label>
+                                    <input matInput [value]="getCategoryName(productForm.get('categoryId')?.value)"
+                                        disabled>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Sub Category</mat-label>
+                                    <input matInput
+                                        [value]="getSubCategoryName(productForm.get('subCategoryId')?.value)" disabled>
+                                </mat-form-field>
+                            </div>
+
+                            <mat-form-field appearance="outline" class="full-width">
+                                <mat-label>Description</mat-label>
+                                <textarea matInput [value]="productForm.get('description')?.value" rows="3"
+                                    disabled></textarea>
+                            </mat-form-field>
+
+                            <!-- Read-only Variants Table -->
+                            <h3>Variants</h3>
+                            <div class="variants-table-container" *ngIf="variants.length > 0">
+                                <table mat-table [dataSource]="variants" class="mat-elevation-z1">
+                                    <ng-container matColumnDef="variant_code">
+                                        <th mat-header-cell *matHeaderCellDef> Code </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.variant_code}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="pack_weight">
+                                        <th mat-header-cell *matHeaderCellDef> Weight </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.pack_weight}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="net_content">
+                                        <th mat-header-cell *matHeaderCellDef> Net Content </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.net_content}} </td>
+                                    </ng-container>
+                                    <!-- No Actions column for review -->
+                                    <ng-container matColumnDef="actions">
+                                        <th mat-header-cell *matHeaderCellDef> Actions </th>
+                                        <td mat-cell *matCellDef="let element"> - </td>
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                </table>
+                            </div>
+                            <div *ngIf="variants.length === 0">
+                                <p>No variants added.</p>
+                            </div>
                         </div>
                         <div class="stepper-actions">
                             <button mat-button matStepperPrevious type="button">Back</button>

@@ -14,13 +14,19 @@ export class ProductService {
     addProduct(productData: any): Observable<any> {
         const token = localStorage.getItem('adminToken');
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-        return this.http.post(`${this.apiUrl}/admin/product`, productData, { headers });
+        return this.http.post(`${this.apiUrl}/admin/products`, productData, { headers });
     }
 
     addProductVariant(variantData: any): Observable<any> {
         const token = localStorage.getItem('adminToken');
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
         return this.http.post(`${this.apiUrl}/admin/product-variants`, variantData, { headers });
+    }
+
+    getAllProducts(): Observable<any> {
+        const token = localStorage.getItem('adminToken');
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        return this.http.get(`${this.apiUrl}/admin/products`, { headers });
     }
 
     getAllVariantsProductWise(): Observable<any> {
@@ -57,5 +63,11 @@ export class ProductService {
         const token = localStorage.getItem('adminToken');
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
         return this.http.put(`${this.apiUrl}/admin/products/${id}`, productData, { headers });
+    }
+
+    deleteProduct(id: any): Observable<any> {
+        const token = localStorage.getItem('adminToken');
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        return this.http.delete(`${this.apiUrl}/admin/products/${id}`, { headers });
     }
 }

@@ -1,4 +1,5 @@
 import { Component, inject, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -23,23 +24,29 @@ import { ProductStepperComponent } from '../add-product/add-product.component';
         ProductStepperComponent
     ],
     templateUrl: './product-variant-list.html',
-    styleUrl: './product-variant-list.scss'
+    styleUrl: './product-variant-list.scss',
+    animations: [
+        trigger('detailExpand', [
+            state('collapsed,void', style({ height: '0px', minHeight: '0' })),
+            state('expanded', style({ height: '*' })),
+            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+        ]),
+    ],
 })
 export class ProductVariantListComponent implements OnInit, AfterViewInit {
     private productService = inject(ProductService);
     private router = inject(Router);
 
     displayedColumns: string[] = [
-        'variant_code',
-        'productname',
+        'expand',
+        'productCode',
+        'name',
         'category',
         'subcategory',
-        'pack_with_unit',
-        'net_content',
-        'barcode',
         'actions'
     ];
     dataSource = new MatTableDataSource<any>([]);
+    expandedElement: any | null;
     isLoading = false;
     errorMessage = '';
 
@@ -50,7 +57,7 @@ export class ProductVariantListComponent implements OnInit, AfterViewInit {
     @ViewChild(MatSort) sort!: MatSort;
 
     ngOnInit() {
-        this.loadVariants();
+        this.loadProducts();
     }
 
     ngAfterViewInit() {
@@ -58,19 +65,18 @@ export class ProductVariantListComponent implements OnInit, AfterViewInit {
         this.dataSource.sort = this.sort;
     }
 
-    loadVariants() {
+    loadProducts() {
         this.isLoading = true;
-        this.productService.getAllVariantsProductWise().subscribe({
+        this.productService.getAllProducts().subscribe({
             next: (response: any) => {
                 this.isLoading = false;
-                // The API returns a flat array directly
                 const data = Array.isArray(response) ? response : (response.data || []);
                 this.dataSource.data = data;
             },
             error: (err) => {
-                this.errorMessage = 'Failed to load product variants.';
+                this.errorMessage = 'Failed to load products.';
                 this.isLoading = false;
-                console.error('Error loading variants:', err);
+                console.error('Error loading products:', err);
             }
         });
     }
@@ -100,18 +106,18 @@ export class ProductVariantListComponent implements OnInit, AfterViewInit {
 
     onModalRefresh() {
         this.closeModal();
-        this.loadVariants();
+        this.loadProducts();
     }
 
-    deleteVariant(id: string) {
-        if (confirm('Are you sure you want to delete this variant?')) {
-            this.productService.deleteProductVariant(id).subscribe({
+    deleteProduct(id: string) {
+        if (confirm('Are you sure you want to delete this product? This will also delete all its variants.')) {
+            this.productService.deleteProduct(id).subscribe({
                 next: () => {
-                    this.loadVariants(); // Reload list
+                    this.loadProducts(); // Reload list
                 },
-                error: (err) => {
-                    alert('Failed to delete variant.');
-                    console.error('Error deleting variant:', err);
+                error: (err: any) => {
+                    alert('Failed to delete product.');
+                    console.error('Error deleting product:', err);
                 }
             });
         }

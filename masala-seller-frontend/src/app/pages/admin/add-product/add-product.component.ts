@@ -42,6 +42,8 @@ export class ProductStepperComponent implements OnInit, OnChanges {
     uoms: any[] = [];
     isSaving = false;
     isEditMode = false;
+    editingVariantIndex: number | null = null;
+    deletedVariantIds: any[] = [];
 
     @Input() productId: string | null = null;
     @Output() close = new EventEmitter<void>();
@@ -90,6 +92,7 @@ export class ProductStepperComponent implements OnInit, OnChanges {
                 this.isEditMode = false;
                 this.productForm.reset({ isActive: true });
                 this.variants = [];
+                this.deletedVariantIds = [];
             }
         }
     }
@@ -146,15 +149,47 @@ export class ProductStepperComponent implements OnInit, OnChanges {
         this.subCategories = this.allSubCategories.filter(sub => sub.categoryId === categoryId);
     }
 
+    getCategoryName(id: string): string {
+        return this.categories.find(c => c.id === id)?.name || '';
+    }
+
+    getSubCategoryName(id: string): string {
+        return this.allSubCategories.find(s => s.id === id)?.name || '';
+    }
+
     addVariant() {
         if (this.variantForm.valid) {
-            this.variants.push(this.variantForm.value);
+            if (this.editingVariantIndex !== null) {
+                const updatedVariants = [...this.variants];
+                updatedVariants[this.editingVariantIndex] = this.variantForm.value;
+                this.variants = updatedVariants;
+                this.editingVariantIndex = null;
+            } else {
+                this.variants = [...this.variants, this.variantForm.value];
+            }
             this.variantForm.reset({ isActive: true });
         }
     }
 
+    editVariant(index: number) {
+        this.editingVariantIndex = index;
+        this.variantForm.patchValue(this.variants[index]);
+    }
+
+    cancelEdit() {
+        this.editingVariantIndex = null;
+        this.variantForm.reset({ isActive: true });
+    }
+
     removeVariant(index: number) {
-        this.variants.splice(index, 1);
+        const variant = this.variants[index];
+        if (variant.variant_id) {
+            this.deletedVariantIds.push(variant.variant_id);
+        }
+        this.variants = this.variants.filter((_, i) => i !== index);
+        if (this.editingVariantIndex === index) {
+            this.cancelEdit();
+        }
     }
 
     async saveAll() {
@@ -169,7 +204,8 @@ export class ProductStepperComponent implements OnInit, OnChanges {
                 await lastValueFrom(this.productService.updateProduct(this.productId, productData));
             } else {
                 const productRes = await lastValueFrom(this.productService.addProduct(productData));
-                productId = productRes.data ? productRes.data.id : productRes.id;
+                productId = productRes.product.id
+
             }
 
             for (const variant of this.variants) {
@@ -180,6 +216,12 @@ export class ProductStepperComponent implements OnInit, OnChanges {
                     await lastValueFrom(this.productService.addProductVariant(variantData));
                 }
             }
+
+            // Process deleted variants
+            for (const id of this.deletedVariantIds) {
+                await lastValueFrom(this.productService.deleteProductVariant(id));
+            }
+            this.deletedVariantIds = [];
 
             alert(this.isEditMode ? 'Product updated successfully!' : 'Product and variants saved successfully!');
             this.refresh.emit();

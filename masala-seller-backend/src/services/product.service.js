@@ -1,6 +1,8 @@
 // services/product.service.js
 const db = require('../models');
 const Product = db.Product;
+const Category = db.Category;
+const SubCategory = db.SubCategory;
 
 const createProduct = async (productData) => {
     try {
@@ -27,7 +29,26 @@ const createProduct = async (productData) => {
 const getAllProducts = async () => {
     try {
         const products = await Product.findAll({
-            order: [['name', 'ASC']]
+            include: [
+                {
+                    model: Category,
+                    as: 'category'
+                },
+                {
+                    model: SubCategory,
+                    as: 'subcategory'
+                },
+                {
+                    model: db.ProductVariant,
+                    as: 'variants',
+                    include: [
+                        {
+                            model: db.Uom,
+                            as: 'uom'
+                        }
+                    ]
+                }
+            ]
         });
         return products;
     } catch (error) {
@@ -96,6 +117,10 @@ const updateProduct = async (id, updateData) => {
 
 const deleteProduct = async (id) => {
     try {
+        // First delete all variants associated with this product
+        await db.ProductVariant.destroy({ where: { productId: id } });
+
+        // Then delete the product
         const deletedCount = await Product.destroy({ where: { id } });
         if (deletedCount && deletedCount > 0) return true;
 
