@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { SubCategoryService } from '../../../services/subcategory';
-import { CategoryService } from '../../../services/category';
+import { SubCategoryService } from '../../../services/subcategory.service';
+import { CategoryService } from '../../../services/category.service';
 
 @Component({
     selector: 'app-add-sub-category',

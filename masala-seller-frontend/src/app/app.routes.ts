@@ -39,6 +39,14 @@ export const routes: Routes = [
             {
                 path: 'product-variants',
                 loadComponent: () => import('./pages/admin/product-variant-list/product-variant-list').then(m => m.ProductVariantListComponent)
+            },
+            {
+                path: 'inventory',
+                loadComponent: () => import('./pages/admin/inventory-list/inventory-list.component').then(m => m.InventoryListComponent)
+            },
+            {
+                path: 'inventory/add',
+                loadComponent: () => import('./pages/add-inventory/add-inventory.component').then(m => m.AddInventoryComponent)
             }
         ]
     },

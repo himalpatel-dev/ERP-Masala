@@ -6,7 +6,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
-import { WarehouseService } from '../../../services/warehouse';
+import { WarehouseService } from '../../../services/warehouse.service';
 import { AddWarehouseComponent } from '../add-warehouse/add-warehouse';
 
 @Component({

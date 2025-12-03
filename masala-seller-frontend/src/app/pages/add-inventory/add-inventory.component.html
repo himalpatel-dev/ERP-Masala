@@ -1,0 +1,92 @@
+<div class="container mx-auto p-6">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Add Inventory</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="mt-4">
+            <form [formGroup]="inventoryForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Product Variant</mat-label>
+                        <mat-select formControlName="variant_id">
+                            <mat-option *ngFor="let variant of variants" [value]="variant.variant_id">
+                                {{ variant.product_name }} - {{ variant.variant_code }} ({{ variant.net_content }})
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="inventoryForm.get('variant_id')?.hasError('required')">
+                            Variant is required
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Warehouse</mat-label>
+                        <mat-select formControlName="warehouse_id">
+                            <mat-option *ngFor="let warehouse of warehouses" [value]="warehouse.warehouse_id">
+                                {{ warehouse.name }} ({{ warehouse.code }})
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="inventoryForm.get('warehouse_id')?.hasError('required')">
+                            Warehouse is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Manufacturing Date</mat-label>
+                        <mat-datepicker-toggle matIconSuffix [for]="mfgPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #mfgPicker></mat-datepicker>
+                        <input matInput [matDatepicker]="mfgPicker" formControlName="mfg_date">
+                        <mat-error *ngIf="inventoryForm.get('mfg_date')?.hasError('required')">
+                            Mfg Date is required
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Expiry Date</mat-label>
+                        <mat-datepicker-toggle matIconSuffix [for]="expiryPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #expiryPicker></mat-datepicker>
+                        <input matInput [matDatepicker]="expiryPicker" formControlName="expiry_date">
+                        <mat-error *ngIf="inventoryForm.get('expiry_date')?.hasError('required')">
+                            Expiry Date is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Qty On Hand</mat-label>
+                        <input matInput type="number" formControlName="qty_on_hand">
+                        <mat-error *ngIf="inventoryForm.get('qty_on_hand')?.hasError('required')">
+                            Qty is required
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Qty Reserved</mat-label>
+                        <input matInput type="number" formControlName="qty_reserved">
+                        <mat-error *ngIf="inventoryForm.get('qty_reserved')?.hasError('required')">
+                            Reserved Qty is required
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Cost Per Unit</mat-label>
+                        <input matInput type="number" formControlName="cost_per_unit">
+                        <mat-error *ngIf="inventoryForm.get('cost_per_unit')?.hasError('required')">
+                            Cost is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="flex justify-end">
+                    <button mat-raised-button color="primary" type="submit" [disabled]="inventoryForm.invalid">
+                        Save Inventory
+                    </button>
+                </div>
+
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

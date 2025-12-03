@@ -5,7 +5,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { CategoryService } from '../../../services/category';
+import { CategoryService } from '../../../services/category.service';
 import { AddCategoryComponent } from '../add-category/add-category';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CategoryService } from '../../../services/category';
+import { CategoryService } from '../../../services/category.service';
 
 @Component({
   selector: 'app-add-category',

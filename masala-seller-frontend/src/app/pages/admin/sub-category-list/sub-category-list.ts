@@ -5,7 +5,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { SubCategoryService } from '../../../services/subcategory';
+import { SubCategoryService } from '../../../services/subcategory.service';
 import { AddSubCategoryComponent } from '../add-sub-category/add-sub-category';
 
 @Component({
