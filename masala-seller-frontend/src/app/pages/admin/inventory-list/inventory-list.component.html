@@ -1,65 +1,90 @@
-<div class="container mx-auto p-6">
-    <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold">Inventory</h2>
-        <button mat-raised-button color="primary" (click)="navigateToAdd()">
-            <mat-icon>add</mat-icon> Add Inventory
+<div class="inventory-list-container">
+    <div class="header-actions">
+        <h2>Inventory Management</h2>
+        <button (click)="openModal()" class="btn-add">
+            <span>+</span> Add Inventory
         </button>
     </div>
 
-    <div class="mat-elevation-z8 overflow-auto">
-        <div class="loading-state p-4" *ngIf="isLoading">
+    <div class="table-container mat-elevation-z8">
+        <div class="loading-state" *ngIf="isLoading">
             Loading inventory...
         </div>
 
-        <div class="error-state p-4 text-red-500" *ngIf="errorMessage">
+        <div class="error-state" *ngIf="errorMessage">
             {{ errorMessage }}
         </div>
 
-        <table mat-table [dataSource]="dataSource" matSort *ngIf="!isLoading && !errorMessage" class="w-full">
+        <table mat-table [dataSource]="dataSource" matSort *ngIf="!isLoading && !errorMessage">
 
             <!-- Variant Column -->
             <ng-container matColumnDef="variant">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Variant </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Product Variant </th>
                 <td mat-cell *matCellDef="let row">
-                    {{ row.ProductVariant?.variant_code }}
-                    <span class="text-xs text-gray-500 block">{{ row.ProductVariant?.Product?.product_name }}</span>
+                    <div class="variant-info">
+                        <span class="product-name">{{ row.variant?.product?.name }}</span>
+                        <span class="variant-code">{{ row.variant?.variant_code }} ({{ row.variant?.net_content
+                            }})</span>
+                    </div>
                 </td>
             </ng-container>
 
             <!-- Warehouse Column -->
             <ng-container matColumnDef="warehouse">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Warehouse </th>
-                <td mat-cell *matCellDef="let row"> {{ row.Warehouse?.warehouse_name }} </td>
+                <td mat-cell *matCellDef="let row">
+                    <div class="warehouse-info">
+                        <span class="warehouse-name">{{ row.warehouse?.name }}</span>
+                        <span class="warehouse-code">{{ row.warehouse?.code }}</span>
+                    </div>
+                </td>
             </ng-container>
 
             <!-- Qty On Hand Column -->
             <ng-container matColumnDef="qty_on_hand">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Qty On Hand </th>
-                <td mat-cell *matCellDef="let row"> {{ row.qty_on_hand }} </td>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> On Hand </th>
+                <td mat-cell *matCellDef="let row">
+                    <span class="qty-badge on-hand">{{ row.qty_on_hand }}</span>
+                </td>
             </ng-container>
 
             <!-- Qty Reserved Column -->
             <ng-container matColumnDef="qty_reserved">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Qty Reserved </th>
-                <td mat-cell *matCellDef="let row"> {{ row.qty_reserved }} </td>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Reserved </th>
+                <td mat-cell *matCellDef="let row">
+                    <span class="qty-badge reserved">{{ row.qty_reserved }}</span>
+                </td>
             </ng-container>
 
             <!-- Cost Column -->
             <ng-container matColumnDef="cost_per_unit">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Cost </th>
-                <td mat-cell *matCellDef="let row"> {{ row.cost_per_unit | currency:'INR' }} </td>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Cost/Unit </th>
+                <td mat-cell *matCellDef="let row" class="cost-cell"> {{ row.cost_per_unit | currency:'INR' }} </td>
             </ng-container>
 
             <!-- Mfg Date Column -->
             <ng-container matColumnDef="mfg_date">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Mfg Date </th>
-                <td mat-cell *matCellDef="let row"> {{ row.mfg_date | date }} </td>
+                <td mat-cell *matCellDef="let row"> {{ row.mfg_date | date:'mediumDate' }} </td>
             </ng-container>
 
             <!-- Expiry Date Column -->
             <ng-container matColumnDef="expiry_date">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Expiry Date </th>
-                <td mat-cell *matCellDef="let row"> {{ row.expiry_date | date }} </td>
+                <td mat-cell *matCellDef="let row"> {{ row.expiry_date | date:'mediumDate' }} </td>
+            </ng-container>
+
+            <!-- Actions column for edit/delete -->
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                <td mat-cell *matCellDef="let row">
+                    <button mat-icon-button color="primary" (click)="editInventory(row.inventory_id); $event.stopPropagation()" title="Edit">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="deleteInventory(row.inventory_id); $event.stopPropagation()" title="Delete">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -67,10 +92,14 @@
 
             <!-- Row shown when there is no matching data. -->
             <tr class="mat-row" *matNoDataRow>
-                <td class="mat-cell p-4 text-center" colspan="7">No inventory records found</td>
+                <td class="mat-cell" colspan="8">No inventory records found</td>
             </tr>
         </table>
 
         <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of inventory"></mat-paginator>
     </div>
+
+    <!-- Modal -->
+    <app-add-inventory-modal *ngIf="showModal" [inventoryId]="selectedInventoryId" (close)="onModalClose()" (refresh)="onModalRefresh()">
+    </app-add-inventory-modal>
 </div>

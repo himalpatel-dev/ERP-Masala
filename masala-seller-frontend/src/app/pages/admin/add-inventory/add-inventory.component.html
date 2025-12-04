@@ -1,0 +1,108 @@
+<div class="modal-overlay" (click)="onClose()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="card">
+            <div class="card-header">
+                <h2>Add Inventory</h2>
+                <button class="btn-close" (click)="onClose()">×</button>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="inventoryForm" (ngSubmit)="onSubmit()">
+
+                    <div class="form-grid cols-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Product</mat-label>
+                            <mat-select formControlName="product_id" (selectionChange)="onProductChange($event.value)">
+                                <mat-option [value]="''">-- All Products --</mat-option>
+                                <mat-option *ngFor="let product of products" [value]="product.id || product.product_id || product.productId">
+                                    {{ product.name || product.productname || product.productName }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Product Variant</mat-label>
+                            <mat-select formControlName="variant_id">
+                                <mat-option *ngFor="let variant of filteredVariants" [value]="variant.variant_id || variant.id || variant.variantId">
+                                    {{ variant.product_name || variant.productname || variant.productName }} - {{ variant.variant_code || variant.variantCode || variant.code }} ({{ variant.net_content || variant.netContent }})
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="inventoryForm.get('variant_id')?.hasError('required')">
+                                Variant is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-grid cols-1">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Warehouse</mat-label>
+                            <mat-select formControlName="warehouse_id">
+                                <mat-option *ngFor="let warehouse of warehouses" [value]="warehouse.warehouse_id">
+                                    {{ warehouse.name }} ({{ warehouse.code }})
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="inventoryForm.get('warehouse_id')?.hasError('required')">
+                                Warehouse is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-grid cols-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Manufacturing Date</mat-label>
+                            <mat-datepicker-toggle matIconSuffix [for]="mfgPicker"></mat-datepicker-toggle>
+                            <mat-datepicker #mfgPicker></mat-datepicker>
+                            <input matInput [matDatepicker]="mfgPicker" formControlName="mfg_date">
+                            <mat-error *ngIf="inventoryForm.get('mfg_date')?.hasError('required')">
+                                Mfg Date is required
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Expiry Date</mat-label>
+                            <mat-datepicker-toggle matIconSuffix [for]="expiryPicker"></mat-datepicker-toggle>
+                            <mat-datepicker #expiryPicker></mat-datepicker>
+                            <input matInput [matDatepicker]="expiryPicker" formControlName="expiry_date">
+                            <mat-error *ngIf="inventoryForm.get('expiry_date')?.hasError('required')">
+                                Expiry Date is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-grid cols-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Qty On Hand</mat-label>
+                            <input matInput type="number" formControlName="qty_on_hand">
+                            <mat-error *ngIf="inventoryForm.get('qty_on_hand')?.hasError('required')">
+                                Qty is required
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Qty Reserved</mat-label>
+                            <input matInput type="number" formControlName="qty_reserved">
+                            <mat-error *ngIf="inventoryForm.get('qty_reserved')?.hasError('required')">
+                                Reserved Qty is required
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Cost Per Unit</mat-label>
+                            <input matInput type="number" formControlName="cost_per_unit">
+                            <mat-error *ngIf="inventoryForm.get('cost_per_unit')?.hasError('required')">
+                                Cost is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" (click)="onClose()">Cancel</button>
+                        <button type="submit" class="btn-primary" [disabled]="inventoryForm.invalid || isLoading">
+                            {{ isLoading ? 'Saving...' : 'Save Inventory' }}
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

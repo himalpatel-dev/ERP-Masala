@@ -1,4 +1,7 @@
 const Inventory = require('../models/inventory.model');
+const ProductVariant = require('../models/product.model').ProductVariant;
+const Product = require('../models/product.model').Product;
+const Warehouse = require('../models/warehouse.model');
 
 const createInventory = async (data) => {
     try {
@@ -27,6 +30,22 @@ const createInventory = async (data) => {
 
 const getAllInventory = async () => {
     return await Inventory.findAll({
+        include: [
+            {
+                model: ProductVariant,
+                as: 'variant',
+                include: [
+                    {
+                        model: Product,
+                        as: 'product'
+                    }
+                ]
+            },
+            {
+                model: Warehouse,
+                as: 'warehouse'
+            }
+        ],
         order: [['createdAt', 'DESC']]
     });
 };

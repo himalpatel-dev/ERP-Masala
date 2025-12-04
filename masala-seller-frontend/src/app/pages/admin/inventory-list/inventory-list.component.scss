@@ -1,4 +1,140 @@
-/* Add custom styles here if needed */
-.mat-column-variant {
-    min-width: 150px;
+.inventory-list-container {
+    padding: 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+
+    .header-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+
+        h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .btn-add {
+            background-color: #4f46e5;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s;
+
+            span {
+                font-size: 1.2rem;
+                line-height: 1;
+            }
+
+            &:hover {
+                background-color: #4338ca;
+            }
+        }
+    }
+
+    .table-container {
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+        table {
+            width: 100%;
+
+            th.mat-header-cell {
+                background-color: #f8fafc;
+                color: #64748b;
+                font-weight: 600;
+                font-size: 0.875rem;
+                padding: 16px;
+                border-bottom: 1px solid #e2e8f0;
+            }
+
+            td.mat-cell {
+                padding: 16px;
+                border-bottom: 1px solid #e2e8f0;
+                color: #334155;
+                font-size: 0.95rem;
+
+                .variant-info {
+                    display: flex;
+                    flex-direction: column;
+
+                    .product-name {
+                        font-weight: 600;
+                        color: #1e293b;
+                    }
+
+                    .variant-code {
+                        font-size: 0.85rem;
+                        color: #64748b;
+                    }
+                }
+
+                .warehouse-info {
+                    display: flex;
+                    flex-direction: column;
+
+                    .warehouse-name {
+                        font-weight: 500;
+                    }
+
+                    .warehouse-code {
+                        font-size: 0.85rem;
+                        color: #64748b;
+                    }
+                }
+
+                .qty-badge {
+                    display: inline-block;
+                    padding: 4px 12px;
+                    border-radius: 9999px;
+                    font-size: 0.85rem;
+                    font-weight: 600;
+
+                    &.on-hand {
+                        background-color: #dcfce7;
+                        color: #166534;
+                    }
+
+                    &.reserved {
+                        background-color: #fee2e2;
+                        color: #991b1b;
+                    }
+                }
+
+                &.cost-cell {
+                    font-family: 'Roboto Mono', monospace;
+                    font-weight: 500;
+                }
+            }
+
+            tr.mat-row:hover {
+                background-color: #f8fafc;
+            }
+        }
+
+        .loading-state,
+        .error-state {
+            padding: 48px;
+            text-align: center;
+            color: #64748b;
+        }
+
+        .error-state {
+            color: #ef4444;
+        }
+
+        .mat-paginator {
+            border-top: 1px solid #e2e8f0;
+        }
+    }
 }
